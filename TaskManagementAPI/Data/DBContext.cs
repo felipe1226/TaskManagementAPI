@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskManagementAPI.Models;
 
-namespace TaskManagementAPI
+namespace TaskManagementAPI.Data
 {
     public partial class DBContext : DbContext
     {
@@ -20,7 +20,7 @@ namespace TaskManagementAPI
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserProfile> UserProfile { get; set; }
-        public virtual DbSet<UserProfile> Waypoint { get; set; }
+        public virtual DbSet<Waypoint> Waypoint { get; set; }
         public virtual DbSet<WorkTask> WorkTask { get; set; }
         public virtual DbSet<WorkTaskStatus> WorkTaskStatus { get; set; }
 
@@ -93,6 +93,11 @@ namespace TaskManagementAPI
                 entity.Property(e => e.Lastname)
                     .IsRequired()
                     .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Phone)
+                    .IsRequired()
+                    .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.State)
@@ -202,7 +207,7 @@ namespace TaskManagementAPI
                     .IsRequired()
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-                
+
                 entity.Property(e => e.Observation)
                     .HasMaxLength(150)
                     .IsUnicode(false);
