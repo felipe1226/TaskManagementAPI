@@ -1,5 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using TaskManagementAPI.Data;
+using TaskManagementAPI.DI;
+using TaskManagementAPI.Mapper;
 
 namespace TaskManagementAPI
 {
@@ -36,6 +40,16 @@ namespace TaskManagementAPI
                     Description = "",
                 });
             });
+
+            //mapper
+            var mapperConfig = new MapperConfiguration(m =>
+            {
+                m.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddMvc();
 
             services.AddControllers();
             //services.AddAutoMapper();
@@ -76,7 +90,7 @@ namespace TaskManagementAPI
             services.AddHttpContextAccessor();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            //DependencyInjectionProfile.RegisterProfile(services, Configuration);
+            DependencyInjectionProfile.RegisterProfile(services, Configuration);
         }
     }
 }

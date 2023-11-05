@@ -1,5 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TaskManagementAPI.Data;
+using TaskManagementAPI.DTO.Category;
+using TaskManagementAPI.Helpers;
+using TaskManagementAPI.Interfaces;
 using TaskManagementAPI.Models;
 
 namespace TaskManagementAPI.Controllers
@@ -9,18 +15,18 @@ namespace TaskManagementAPI.Controllers
     [Route("category")]
     public class CategoryController : ControllerBase
     {
+        private readonly ICategoryAppService _categoryAppService;
 
-        private readonly DBContext _context;
-
-        public CategoryController(DBContext context)
+        public CategoryController(
+            ICategoryAppService categoryAppService)
         {
-            _context = context;
+            _categoryAppService = categoryAppService;
         }
 
         [HttpPost("list")]
-        public async Task<IEnumerable<dynamic>> list()
+        public async Task<ActionResult<object>> getCategories()
         {
-            return null;
+            return _categoryAppService.getCategories();
         }
     }
 }

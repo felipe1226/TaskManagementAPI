@@ -5,7 +5,6 @@
         public User() 
         {
             WorkTasks = new HashSet<WorkTask>();
-            WorkTaskStatuses = new HashSet<WorkTaskStatus>();
         }
 
         public Guid Id { get; set; }
@@ -18,6 +17,5 @@
         public virtual UserProfile UserProfileNavigation { get; set; }
 
         public virtual ICollection<WorkTask> WorkTasks { get; set; }
-        public virtual ICollection<WorkTaskStatus> WorkTaskStatuses { get; set; }
     }
 }

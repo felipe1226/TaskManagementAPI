@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManagementAPI.Data;
 
@@ -11,9 +12,11 @@ using TaskManagementAPI.Data;
 namespace TaskManagementAPI.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20231104234304_add_user_and_workTaskStatus_data")]
+    partial class add_user_and_workTaskStatus_data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,7 +265,7 @@ namespace TaskManagementAPI.Migrations
                     b.Property<Guid>("Status")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("User")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("WorkTask")
@@ -272,7 +275,7 @@ namespace TaskManagementAPI.Migrations
 
                     b.HasIndex("Status");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("User");
 
                     b.HasIndex("WorkTask");
 
@@ -342,9 +345,12 @@ namespace TaskManagementAPI.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_WorkTaskStatus_Status");
 
-                    b.HasOne("TaskManagementAPI.Models.User", null)
+                    b.HasOne("TaskManagementAPI.Models.User", "UserNavigation")
                         .WithMany("WorkTaskStatuses")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("User")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_WorkTaskStatus_User");
 
                     b.HasOne("TaskManagementAPI.Models.WorkTask", "WorkTaskNavigation")
                         .WithMany("WorkTaskStatuses")
@@ -354,6 +360,8 @@ namespace TaskManagementAPI.Migrations
                         .HasConstraintName("FK_WorkTaskStatus_WorkTask");
 
                     b.Navigation("StatusNavigation");
+
+                    b.Navigation("UserNavigation");
 
                     b.Navigation("WorkTaskNavigation");
                 });
