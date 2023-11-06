@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace TaskManagementAPI.Models
+﻿namespace TaskManagementAPI.Models
 {
     public class Status
     {

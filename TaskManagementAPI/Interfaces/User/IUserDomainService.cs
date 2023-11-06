@@ -5,8 +5,7 @@ namespace TaskManagementAPI.Interfaces
 {
     public interface IUserDomainService
     {
-
-        User getUserById(Guid id);
+        User getUser(Guid id);
 
         IQueryable<User> getUsers(UserFiltersDTO filters);
     }

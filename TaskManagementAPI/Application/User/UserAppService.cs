@@ -1,55 +1,54 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
+using TaskManagementAPI.DTO;
 using TaskManagementAPI.DTO.User;
+using TaskManagementAPI.Helpers;
 using TaskManagementAPI.Interfaces;
-using TaskManagementAPI.Models;
 
 namespace TaskManagementAPI.Services
 {
     public class UserAppService : IUserService
     {
+        private readonly JsonResponse jsonResponse = JsonResponse.Instance;
         private readonly IUserDomainService _userDomainServices;
+        private readonly IMapper _mapper;
 
         public UserAppService(
-            IUserDomainService userDomainServices) 
+            IUserDomainService userDomainServices,
+            IMapper mapper) 
         {
             _userDomainServices = userDomainServices;
+            _mapper = mapper;
         }
 
-        public ActionResult<UserDTO> getUserById(string id)
+        public ActionResult<JsonResponseDTO> getUser(string id)
         {
             try
             {
-                User user = _userDomainServices.getUserById(Guid.Parse(id));
-
-                return null;
+                UserDTO userDTO = _mapper.Map<UserDTO>(_userDomainServices.getUser(Guid.Parse(id)));
+                return jsonResponse.CreateSuccessResponse(userDTO);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return null;
+                return jsonResponse.CreateErrorResponse(e.Message);
             }
         }
 
-        public ActionResult<IEnumerable<UserDTO>> getUsers(UserFiltersDTO filters)
+        public ActionResult<JsonResponseDTO> getUsers(UserFiltersDTO filters)
         {
             try
             {
-                IQueryable<User> users = _userDomainServices.getUsers(filters);
+                IEnumerable<UserDTO> usersDTO = _userDomainServices.getUsers(filters)
+                    .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
+                    .ToList()
+                    .OrderBy(user => user.Name);
 
-                IEnumerable<UserDTO> usersDTO = users.Select(user => new UserDTO
-                    {
-                        Id = user.Id,
-                        ProfileName = user.UserProfileNavigation.Name,
-                        Name = $"{user.Name} {user.Lastname}",
-                        Phone = user.Phone
-                    })
-                    ;
-
-
-                return usersDTO.OrderBy(user => user.Name).ToList();
+                return jsonResponse.CreateSuccessResponse(usersDTO);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return null;
+                return jsonResponse.CreateErrorResponse(e.Message);
             }
         }
     }

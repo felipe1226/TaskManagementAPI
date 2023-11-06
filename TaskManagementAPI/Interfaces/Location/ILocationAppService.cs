@@ -3,8 +3,8 @@ using TaskManagementAPI.DTO;
 
 namespace TaskManagementAPI.Interfaces
 {
-    public interface ICategoryAppService
+    public interface ILocationAppService
     {
-        ActionResult<JsonResponseDTO> getCategories();
+        ActionResult<JsonResponseDTO> getLocations();
     }
 }

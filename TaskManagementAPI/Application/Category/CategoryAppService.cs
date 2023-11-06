@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
+using TaskManagementAPI.DTO;
 using TaskManagementAPI.DTO.Category;
 using TaskManagementAPI.Helpers;
 using TaskManagementAPI.Interfaces;
-using TaskManagementAPI.Models;
 
 namespace TaskManagementAPI.Application
 {
@@ -22,7 +22,7 @@ namespace TaskManagementAPI.Application
             _categoryDomainService = categoryDomainService;
         }
 
-        public ActionResult<object> getCategories()
+        public ActionResult<JsonResponseDTO> getCategories()
         {
             try
             {

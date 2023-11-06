@@ -14,7 +14,7 @@ namespace TaskManagementAPI.Data.Repositories
             _context = context;
         }
 
-        public User getUserById(Guid id)
+        public User getUser(Guid id)
         {
             return _context.User
                 .Where(user => user.Id.Equals(id))
@@ -25,11 +25,9 @@ namespace TaskManagementAPI.Data.Repositories
 
         public IQueryable<User> getUsers(UserFiltersDTO filters)
         {
-            IQueryable<User> users = _context.User
+            return _context.User
                 .Where(user => user.State)
                 .Include(user => user.UserProfileNavigation);
-
-            return users;
         }
     }
 }
