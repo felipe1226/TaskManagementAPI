@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace TaskManagementAPI.Models
+﻿namespace TaskManagementAPI.Models
 {
     public class Waypoint
     {

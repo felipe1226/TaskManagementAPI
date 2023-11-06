@@ -15,6 +15,8 @@ namespace TaskManagementAPI.Interfaces
 
         IQueryable<WorkTask> getWorkTasks(WorkTaskFiltersDTO filters);
 
+        Guid getStatusIdByCode(string code);
+
         int updateStatus(WorkTaskStatus workTaskStatus);
     }
 }

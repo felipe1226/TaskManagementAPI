@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TaskManagementAPI.Interfaces;
+﻿using TaskManagementAPI.Interfaces;
 using TaskManagementAPI.Models;
 
 namespace TaskManagementAPI.Data.Domain

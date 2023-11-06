@@ -4,7 +4,6 @@ namespace TaskManagementAPI.Interfaces
 {
     public interface ICategoryDomainService
     {
-
         IQueryable<Category> getCategories();
     }
 }

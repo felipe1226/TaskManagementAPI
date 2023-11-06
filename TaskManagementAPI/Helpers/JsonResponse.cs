@@ -7,10 +7,7 @@ namespace TaskManagementAPI.Helpers
         private static JsonResponse instance;
         private static readonly object lockObject = new object();
 
-        private JsonResponse()
-        {
-            // Constructor privado para evitar instanciación directa.
-        }
+        private JsonResponse(){}
 
         public static JsonResponse Instance
         {

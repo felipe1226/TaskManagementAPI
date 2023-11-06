@@ -1,18 +1,11 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TaskManagementAPI.Data;
-using TaskManagementAPI.DTO.Category;
-using TaskManagementAPI.Helpers;
+﻿using Microsoft.AspNetCore.Mvc;
+using TaskManagementAPI.DTO;
 using TaskManagementAPI.Interfaces;
-using TaskManagementAPI.Models;
 
 namespace TaskManagementAPI.Controllers
 {
-
     [ApiController]
-    [Route("category")]
+    [Route("api/category")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryAppService _categoryAppService;
@@ -23,8 +16,12 @@ namespace TaskManagementAPI.Controllers
             _categoryAppService = categoryAppService;
         }
 
-        [HttpPost("list")]
-        public async Task<ActionResult<object>> getCategories()
+        /// <summary>
+        /// Obtener lista de categorias
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("list")]
+        public async Task<ActionResult<JsonResponseDTO>> getCategories()
         {
             return _categoryAppService.getCategories();
         }

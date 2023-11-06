@@ -5,15 +5,9 @@ namespace TaskManagementAPI.Data
 {
     public partial class DBContext : DbContext
     {
-        public DBContext()
-        {
+        public DBContext(){}
 
-        }
-
-        public DBContext(DbContextOptions<DBContext> options) : base(options)
-        {
-
-        }
+        public DBContext(DbContextOptions<DBContext> options) : base(options){}
 
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Location> Location { get; set; }
@@ -23,7 +17,6 @@ namespace TaskManagementAPI.Data
         public virtual DbSet<Waypoint> Waypoint { get; set; }
         public virtual DbSet<WorkTask> WorkTask { get; set; }
         public virtual DbSet<WorkTaskStatus> WorkTaskStatus { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -227,12 +220,9 @@ namespace TaskManagementAPI.Data
                     .HasConstraintName("FK_WorkTaskStatus_Status");
             });
 
-
-
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
     }
 }

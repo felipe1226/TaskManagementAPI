@@ -68,6 +68,12 @@ namespace TaskManagementAPI.Data.Repositories
             return workTasks;
         }
 
+        public Guid getStatusIdByCode(string code)
+        {
+            return _context.Status.Where(s => s.Code.Equals(code))
+                .FirstOrDefault().Id;
+        }
+
         public int updateStatus(WorkTaskStatus workTaskStatus)
         {
             _context.WorkTaskStatus.Add(workTaskStatus);
